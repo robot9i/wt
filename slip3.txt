@@ -1,0 +1,98 @@
+
+////save as login.php////
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login using Session</title>
+</head>
+<body>   
+    <form action="" method="POST">
+        Username: <input type="text" name="uname" />
+        Password: <input type="password" name="pwd"/>
+        <input type="submit" value="Login" />
+    </form>
+            
+    <?php 
+        session_start();
+        // $_SESSION['count']=1;
+
+        if($_SERVER['REQUEST_METHOD']=='POST')
+        {
+            $uname=$_POST['uname'];
+            $pwd=$_POST['pwd'];
+
+            if(($uname == 'abc') && ($pwd == 'abc'))
+            {
+                echo "<a href='next.php'>Next</a>";
+            }
+            else
+            {
+                echo "<script>alert('Wrong username or password!')</script>";
+                $_SESSION['count']+=1;
+                if($_SESSION['count'] == 3)
+                {
+                    echo "3 Attempts are over!";
+                    ?>
+                  <h2>Error</h2>
+                    <?php     
+                    die("Unable to process the script");
+                    session_destroy();
+                }
+            }
+        }    
+        // else
+        // {
+        //     die("Unable to process the script");
+        // }
+    ?>
+</body>
+</html>
+
+////save as next.php////
+heyy have a good day
+
+
+
+
+
+
+
+
+
+DA Q2
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn import metrics
+import seaborn as sn
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
+
+user_ids = np.arange(1, 401)
+genders = np.random.choice(['M', 'F'], size=400)
+ages = np.random.randint(18, 65, size=400)
+estimated_salaries = np.random.randint(20000, 100001, size=400)
+purchased = np.random.choice([0, 1], size=400, p=[0.7, 0.3])
+data = {'USERID': user_ids, 'GENDER': genders, 'AGE': ages, 'ESTIMATEDSALARY': estimated_salaries, 'PURCHASED': purchased}
+df = pd.DataFrame(data)
+print(df)
+X = df[['GENDER', 'AGE', 'ESTIMATEDSALARY']]
+y = df['PURCHASED']
+X = pd.get_dummies(X, drop_first=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+lr = LogisticRegression()
+lr.fit(X_train, y_train)
+y_pred = lr.predict(X_test)
+confusion_matrix = pd.crosstab(y_test, y_pred, rownames=['Actual'], colnames=['Predicted'])
+sn.heatmap(confusion_matrix, annot=True)
+print('Accuracy: ',metrics.accuracy_score(y_test, y_pred))
+plt.show()
+print ("Actual :",y_test)
+print ("Predicted:",y_pred)
+accuracy = accuracy_score(y_test, y_pred)
+print('Accuracy:', accuracy)

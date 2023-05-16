@@ -1,0 +1,43 @@
+  
+////save as .php extension////
+
+
+  <?php
+
+    if(isset($_POST['submit'])){
+        // get user input
+        $number = $_POST['number'];
+
+        // check if number is valid
+        if(!is_numeric($number) || $number < 0){
+            echo "<p>Invalid number entered. Please enter a positive integer.</p>";
+        }else{
+            // calculate fibonacci series
+            $fibonacci = "";
+            $num1 = 0;
+            $num2 = 1;
+            $fibonacci .= "$num1, $num2";
+            while(($num1 + $num2) <= $number){
+                $num3 = $num1 + $num2;
+                $fibonacci .= ", $num3";
+                $num1 = $num2;
+                $num2 = $num3;
+            }
+            // calculate sum of digits
+            $sum = array_sum(str_split($number));
+
+            // display results
+            echo "<p>Fibonacci series up to $number: $fibonacci</p>";
+            echo "<p>Sum of digits of $number: $sum</p>";
+        }
+    }
+
+    ?>
+
+    <!-- HTML form to accept user input -->
+    <form method="post">
+        <label>Enter a positive integer:</label>
+        <input type="text" name="number" required>
+        <br><br>
+        <input type="submit" name="submit" value="Submit">
+    </form>

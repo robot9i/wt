@@ -1,0 +1,59 @@
+////save with .html extension////
+////username:admin password:123////
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form name="Membership_login" onsubmit="validfunction()" method="post">
+        <center>
+            <h3>Membership form</h3>
+            Username: <input type="text" name="user"></br></br>
+            Password: <input type="password" name="pass"></br></br>
+            <input type="submit" value="Login">
+        </center>
+    </form>
+    <script type="text/javascript">
+        function validfunction()
+        {
+            var user = document.Membership_login.user.value
+            var pass = document.Membership_login.pass.value
+            if(user ==="admin" && pass === "123")
+                alert("login successful")
+            else if(user == null || pass=="")
+                alert("Empty username or password field.")
+            else
+                alert("inavlid credentials.")
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, association_rules
+import pandas as pd
+
+data = [['fy', 'sy'], 
+        ['sy', 'fy', 'ty', 'ffy'], 
+        ['ty', 'fy', 'ffy', 'sy'], 
+        ['ffy', 'ty', 'fy', 'sy'], 
+        ['fy', 'sy', 'ty', 'ffy']]
+
+te=TransactionEncoder()
+te_ar=te.fit(data).transform(data)
+df=pd.DataFrame(te_ar,columns=te.columns_)
+print(df)
+
+freq_item=apriori(df,min_support=0.5,use_colnames=True)
+print(freq_item)
+rules=association_rules(freq_item,metric="support",min_threshold=0.05)
+rules=rules.sort_values(['support','confidence'],ascending=[False,False])
+print(rules)

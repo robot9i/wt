@@ -1,0 +1,56 @@
+////save with .hmtl extension///
+////add image in the folder where program is save////
+////save image name as img1///
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <img id="img1" src="" alt="" color="black" width="50" height="50">
+    <br />
+    <button id="beforeBtn">Before</button>
+    <button id="afterBtn">After</button>
+    
+    <script>
+        $('document').ready(function(){
+            $('#beforeBtn').click(function(){
+                $('#img1').before("<h1>Hello</h1>");
+            });
+            $('#afterBtn').click(function(){
+                $('#img1').after("<h1>Bye</h1>");
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, association_rules
+import pandas as pd
+
+data = [['eggs', 'milk','bread'], 
+        ['eggs', 'apple'], 
+        ['milk', 'bread'], 
+        ['apple', 'milk'], 
+        ['milk', 'apple', 'bread']]
+
+te=TransactionEncoder()
+te_ar=te.fit(data).transform(data)
+df=pd.DataFrame(te_ar,columns=te.columns_)
+print(df)
+
+freq_item=apriori(df,min_support=0.5,use_colnames=True)
+print(freq_item)
+rules=association_rules(freq_item,metric="support",min_threshold=0.05)
+rules=rules.sort_values(['support','confidence'],ascending=[False,False])
+print(rules)

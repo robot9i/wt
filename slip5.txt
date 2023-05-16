@@ -1,0 +1,84 @@
+////save as item.xml////
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="item.css"?>
+<Store>
+    <Item>
+        <ItemName>Casuals</ItemName>
+        <ItemPrice>1000</ItemPrice>
+        <Quantity>10</Quantity>
+    </Item>
+    <Item>
+        <ItemName>Sweaters</ItemName>
+        <ItemPrice>1100</ItemPrice>
+        <Quantity>4</Quantity>
+    </Item>
+    <Item>
+        <ItemName>Gloves</ItemName>
+        <ItemPrice>100</ItemPrice>
+        <Quantity>50</Quantity>
+    </Item>
+    <Item>
+        <ItemName>Raincoats</ItemName>
+        <ItemPrice>1200</ItemPrice>
+        <Quantity>10</Quantity>
+    </Item>
+    <Item>
+        <ItemName>Formals</ItemName>
+        <ItemPrice>1250</ItemPrice>
+        <Quantity>10</Quantity>
+    </Item>
+</Store>
+
+
+
+
+
+////save as item.css////
+Item{
+    display: list-item;
+    background: darkblue;
+}
+ItemName {
+  color: red;
+  font-family: copperPlate Gothic Light;
+  font-size: 16pt;
+  font: bold;  
+}
+
+ItemPrice, Quantity {
+    color: yellow;
+    font-family: Arial;
+    font-size: 12pt;
+    font: bold;
+
+}
+
+
+
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import io
+from sklearn.metrics import confusion_matrix
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+
+dataset=pd.read_csv("iris.csv")
+print(dataset)
+x = dataset.iloc[:, [0,1,2,3]].values
+y = dataset.iloc[:, 4].values
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size = 0.25, random_state = 0)
+classifier = LogisticRegression(random_state = 0,solver='lbfgs',multi_class='auto')
+classifier.fit(xtrain, ytrain)
+y_pred = classifier.predict(xtest)
+print('Actual Values',ytest)
+print('Predicted Values',y_pred)
+cm = confusion_matrix(ytest, y_pred)
+
+print ("Confusion Matrix : \n", cm)
+
+from sklearn.metrics import accuracy_score
+print ("Accuracy : ", accuracy_score(ytest, y_pred))

@@ -1,0 +1,69 @@
+
+////just save with .html extnsion/////
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="ch">Welcome</h1>
+    <button onclick="promptfunction()">Prompt</button> <br/> <br/>
+    <button onclick="confirmfunction()">Confirm</button> <br/> <br/>
+    <button onclick="alertfunction()">Alert</button> <br/> <br/>
+    <script type="text/javascript">
+        function promptfunction()
+        {
+            var temp = prompt('Exam are near, have you started preparing for it? Yes or No', 'No')
+            if (temp === 'No')
+            document.getElementById('ch').innerHTML ='Start preparing for the exam'
+            else
+            document.getElementById('ch').innerHTML = 'Study well'
+        }
+
+        function confirmfunction()
+        {
+            var temp = confirm('Exam are near, have you started preparing for it?')
+            if(temp == false)
+            document.getElementById('ch').innerHTML ='Start preparing for the exam'
+                else
+                    document.getElementById('ch').innerHTML = 'Study well'
+        }
+
+        function alertfunction()
+        {
+            alert('Exams are near, start preparing')
+            document.getElementById('ch').innerHTML ='Start preparing for the exam'
+        }
+    </script>
+</body>
+</html>
+
+
+
+import pandas as pd
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, association_rules
+
+df = pd.read_csv('groceries.csv', header=None)
+
+# Print information about the dataset
+print("Dataset information:")
+print(df.info())
+
+
+df = df.dropna()  
+
+te = TransactionEncoder()
+te_ary = te.fit(df.values).transform(df.values)
+df = pd.DataFrame(te_ary, columns=te.columns_)
+
+frequent_itemsets = apriori(df, min_support=0.01, use_colnames=True)
+association_rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.5)
+
+
+print("\nFrequent itemset association rules:")
+print(association_rules)

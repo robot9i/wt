@@ -1,0 +1,65 @@
+
+
+////save as movie.xml////
+<MovieInfo>
+    <Movie>
+        <MovieNo>1</MovieNo>
+        <MovieTitle>RRR</MovieTitle>
+        <ActorName>Alia</ActorName>
+        <ReleaseYear>2000</ReleaseYear>
+    </Movie>
+    <Movie>
+        <MovieNo></MovieNo>
+        <MovieTitle></MovieTitle>
+        <ActorName></ActorName>
+        <ReleaseYear></ReleaseYear>
+    </Movie>
+    <Movie>
+        <MovieNo></MovieNo>
+        <MovieTitle></MovieTitle>
+        <ActorName></ActorName>
+        <ReleaseYear></ReleaseYear>
+    </Movie>
+</MovieInfo>
+    
+
+////save as read_movie.php////
+
+<?php
+
+$dom=new DomDocument();
+$dom->load("movie.xml");
+echo "<h2>Name of Movie</h2>";
+$mname=$dom->getElementsByTagName("Movie");
+foreach($mname as $m)
+{
+    echo "<b>$m->textContent<b><br><br>";
+}
+
+?>
+
+
+
+
+
+
+import pandas as pd
+import io
+from mlxtend.frequent_patterns import apriori, association_rules
+from mlxtend.preprocessing import TransactionEncoder
+df = pd.read_csv("market.csv")
+print(df)
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from apyori import apriori
+transactions = []
+for i in range(0, 7500):
+    transactions.append([str(df.values[i,j]) for j in range(0, 19)])
+    
+rule_list = apriori(transactions, min_support = 0.003, min_confidence = 0.3, min_lift = 3, min_length = 2)
+results = list(rule_list)
+for i in results:
+    print('\n')
+    print(i)
+    print('**********')
